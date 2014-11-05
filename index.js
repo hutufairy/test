@@ -21,7 +21,7 @@ if (cluster.isMaster) {
         spawn(i);
     }
 
-    var worker_index = function(ip, len) {
+    var worker_index = function(ip, len) {//根据IP对CPU个数取余，来分配连接请求
         var s = '';
         for (var i = 0, _len = ip.length; i < _len; i++) {
             if (ip[i] !== '.') {
@@ -32,7 +32,7 @@ if (cluster.isMaster) {
         return Number(s) % len;
     };
 
-    var server = net.createServer(function(connection) {
+    var server = net.createServer(function(connection) {//监听指定接口，当有连接请求时，分配给相应的子进程
         var worker = workers[worker_index(connection.remoteAddress, numCPUs)];
         worker.send('sticky-session:connection', connection);
     }).listen(config.port);
@@ -42,7 +42,7 @@ if (cluster.isMaster) {
     var sio_redis = require('socket.io-redis');
     var express = require('express');
     var app = express();
-    var server = app.listen(0, config.host);
+    var server = app.listen(0, config.host);//不指定监听接口
     var io = sio(server);
 
     var usernames = {};
@@ -60,7 +60,7 @@ if (cluster.isMaster) {
         if (message !== 'sticky-session:connection') {
             return;
         }
-        server.emit('connection', connection);
+        server.emit('connection', connection);//监听到连接请求时，建立连接
     });
 
     io.on('connection', function(socket){
