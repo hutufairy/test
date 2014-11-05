@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <title>吃货聊天室</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/src/lib/bootstrap/v3.2.0/bootstrap.min.css">
+    <link rel="stylesheet" href="/src/css/index.css">
+</head>
+<body>
+    <div class="page-login row page">
+        <div class="form text-center col-xs-12">
+            <h2>What's your nickname?</h2>
+            <input class="input-username h2 input-text" type="text" maxlength="14">
+        </div>
+    </div>
+    <div class="page-chat page container-fluid">
+        <div class="header row">
+            <p class="title col-xs-12 h4">欢迎来到吃货组织根据地</p>
+            <p class="col-xs-12"><span id="numUser">3</span>人在线</p>
+        </div>
+        <div class="body container">
+            <div class="row">
+                <ul id="messages" class="col-xs-9">
+                    
+                </ul>
+                <div id="notices" class="col-xs-3">
+                    <p class="notice" style="opacity: 1">欢迎来到吃货组织根据地</p>
+                    <div class="cover"></div>
+                </div>   
+            </div>
+        </div>
+        <div class="footer row">
+            <div class="col-xs-12">
+                <input type="text" class="input-message input-text" placeholder="Type here...">
+            </div>
+        </div>
+    </div>
+    <script src="/build/js/socket-chat.min.js"></script>
+</body>
+</html>
