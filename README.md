@@ -1,7 +1,8 @@
 test
 ====
 
-聊天室：需要安装nodejs
+nodejs实践之socket.io--聊天室
+
 1. 初始化：
   npm install
 2. 运行
