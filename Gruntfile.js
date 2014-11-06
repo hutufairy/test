@@ -21,7 +21,7 @@ module.exports = function(grunt){
                 separator: ';\n'
             },
             chat: {
-                src: ['public/src/lib/jquery/**/*.js', 'public/src/lib/bootstrap/**/*.js', 'public/src/lib/socket.io/**/*.js', 'public/src/js/index.js'],
+                src: ['public/src/lib/jquery/**/*.js', 'public/src/lib/socket.io/**/*.js', 'public/src/js/index.js'],
                 dest: 'public/build/js/<%= pkg.name %>.js'
             }
         },
