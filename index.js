@@ -50,7 +50,7 @@ if (cluster.isMaster) {
 
     io.adapter(sio_redis({ host: config.host, port: config.redisPort }));
 
-    app.use(express.static(__dirname + '/public'));
+    app.use(express.static(__dirname + '/'));
 
     app.get('/', function(req, res){
         res.sendFile(__dirname + '/views/index.html');
