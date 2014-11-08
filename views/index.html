@@ -3,7 +3,7 @@
 <head>
     <title>吃货聊天室</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/public/src/lib/bootstrap/v3.2.0/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/src/css/index.css">
 </head>
 <body ng-app="chatApp" ng-controller="chatController">
@@ -34,8 +34,8 @@
             </div>
         </div>
     </div>
-    <script src="/public/src/lib/socket.io/v1.2.0/socket.io.js"></script>
-    <script src="/node_modules/angular/angular.min.js"></script>
+    <script src="/bower_components/socket.io-client/socket.io.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
     <script>
         var inputFilter = angular.module('inputFilter', []);
         var chatApp = angular.module('chatApp', ['inputFilter']);
