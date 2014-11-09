@@ -43,9 +43,13 @@
             return function(input){
                 return input;
             }
-        })
+        });
 
-        chatApp.controller('chatController', function($scope){
+        chatApp.factory('socket', function(){
+            return io();
+        });
+
+        chatApp.controller('chatController', function($scope, socket){
             var COLORS = [
                 '#e21400', '#91580f', '#f8a700', '#f78b00',
                 '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
@@ -74,7 +78,7 @@
                     if($scope.user.name == '') return;
                     console.log($scope.user.name)
                     console.log('enter to submit')
-                    // socket.emit('add user', $scope.user.name);
+                    socket.emit('add user', $scope.user.name);
                 }
             };
             $scope.user = {
@@ -83,6 +87,22 @@
             };
 
             $scope.userlist = {}; //用户列表
+            socket.on('login', function(data){
+                $scope.room.number = data.numUser;
+                // $scope.
+            });
+            socket.on('user joined', function(data){//用户加入
+                console.log(data)
+                // updateNotice(data);
+            });
+
+            socket.on('user left', function(data){//用户离开
+                // updateNotice(data, leftMsg);
+            });
+
+            socket.on('chat message', function(data){
+                // updateMessage(data);
+            });
         });
 
         chatApp.directive('chatMessage', function(){
@@ -97,24 +117,6 @@
             }
         });
 
-        socket.on('login', function(data){
-            // $scope.
-        });
-        socket.on('user joined', function(data){//用户加入
-            // updateNotice(data);
-        });
-
-        socket.on('user left', function(data){//用户离开
-            // updateNotice(data, leftMsg);
-        });
-
-        socket.on('chat message', function(data){
-            // updateMessage(data);
-        });
-
-        chatApp.factory('socket', function($scope){
-            var socket = io();
-        })
     </script>
 </body>
 </html>
