@@ -10,113 +10,41 @@
     <div class="page-login page text-center">
             <h2 class="col-xs-12">What's your nickname?</h2>
             <div class="col-xs-12">
-                <input class="input-username h2 input-text" type="text" maxlength="14" ng-model="user.name " ng-keydown="$event.keyCode == 13 && room.login()">
+                <input class="input-username h2 input-text" type="text" maxlength="14" ng-model="user.name " ng-keydown="room.login($event)">
             </div>
 
     </div>
-    <div class="page-chat page">
+    <div class="page-chat page" ng-style="{display: user.loginstatus ? 'block' : 'none'}">
         <div class="page-chat-container">
             <div class="header">
                 <p class="title col-xs-12 h4">欢迎来到吃货组织根据地</p>
                 <p class="col-xs-12"><span id="numUser" ng-bind="room.number"></span>人在线</p>
             </div>
             <div class="body">
-                <div id="messages" chat-message></div>
-                <div id="notices" chat-notice>
+                <div id="messages">
+                    <p ng-repeat="data in room.messages">
+                        <span ng-style='{color: data.coat}'>{{data.username}}</span>
+                        <span>{{data.message}}</span>
+                    </p>
+                </div>
+                <div id="notices">
+                    <p class="notice" ng-repeat="notice in room.notices"  style="opacity: 1">
+                        <span ng-style="{color: notice.coat}" ng-bind='notice.username'></span>
+                        <span >{{notice.message}}</span>
+                    </p>
                     <p class="notice" style="opacity: 1">欢迎来到吃货组织根据地</p>
                     <div class="cover"></div>
                 </div>   
             </div>
             <div class="footer">
                 <div class="col-xs-12">
-                    <input type="text" class="input-message input-text" placeholder="Type here...">
+                    <input type="text" class="input-message input-text" placeholder="Type here..." ng-model="user.message" ng-keydown="user.send($event)">
                 </div>
             </div>
         </div>
     </div>
     <script src="/bower_components/socket.io-client/socket.io.js"></script>
     <script src="/bower_components/angular/angular.min.js"></script>
-    <script>
-        var inputFilter = angular.module('inputFilter', []);
-        var chatApp = angular.module('chatApp', ['inputFilter']);
-        inputFilter.filter('checkinput', function(){
-            return function(input){
-                return input;
-            }
-        });
-
-        chatApp.factory('socket', function(){
-            return io();
-        });
-
-        chatApp.controller('chatController', function($scope, socket){
-            var COLORS = [
-                '#e21400', '#91580f', '#f8a700', '#f78b00',
-                '#58dc00', '#287b00', '#a8f07a', '#4ae8c4',
-                '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
-              ];
-
-            $scope.room = {
-                number: 0,
-                welcome: function(username){
-                    return username + '驾到~';
-                },
-                bye: function(username){
-                    return username + '默默的离开了';
-                },
-                assignCoat: function(username){
-                 // Compute hash code
-                    var hash = 7;
-                    for (var i = 0; i < username.length; i++) {
-                       hash = username.charCodeAt(i) + (hash << 5) - hash;
-                    }
-                    // Calculate color
-                    var index = Math.abs(hash % COLORS.length);
-                    return COLORS[index];
-                },
-                login: function(){
-                    if($scope.user.name == '') return;
-                    console.log($scope.user.name)
-                    console.log('enter to submit')
-                    socket.emit('add user', $scope.user.name);
-                }
-            };
-            $scope.user = {
-                name: '',
-                coat: ''
-            };
-
-            $scope.userlist = {}; //用户列表
-            socket.on('login', function(data){
-                $scope.room.number = data.numUser;
-                // $scope.
-            });
-            socket.on('user joined', function(data){//用户加入
-                console.log(data)
-                // updateNotice(data);
-            });
-
-            socket.on('user left', function(data){//用户离开
-                // updateNotice(data, leftMsg);
-            });
-
-            socket.on('chat message', function(data){
-                // updateMessage(data);
-            });
-        });
-
-        chatApp.directive('chatMessage', function(){
-            return function($scope, element, attr){
-
-            };
-        });
-
-        chatApp.directive('chatNotice', function(){
-            return function($scope, element, attr){
-
-            }
-        });
-
-    </script>
+    <script src="/public/src/js/index.js"></script>
 </body>
 </html>
