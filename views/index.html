@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="/public/src/css/index.css">
 </head>
 <body ng-app="chatApp" ng-controller="chatController">
-    <div class="page-login page text-center">
+    <div class="page-login page text-center" ng-style="{display: !user.loginstatus ? 'block' : 'none'}">
             <h2 class="col-xs-12">What's your nickname?</h2>
             <div class="col-xs-12">
                 <input class="input-username h2 input-text" type="text" maxlength="14" ng-model="user.name " ng-keydown="room.login($event)">
+            </div>
+            <div class="col-xs-12" ng-show="!!user.errormsg">
+                <p class="text-danger">{{user.errormsg}}</p>
             </div>
 
     </div>
@@ -18,7 +21,7 @@
         <div class="page-chat-container">
             <div class="header">
                 <p class="title col-xs-12 h4">欢迎来到吃货组织根据地</p>
-                <p class="col-xs-12"><span id="numUser" ng-bind="room.number"></span>人在线</p>
+                <p class="col-xs-12"><span id="numUser" ng-bind="room.number"></span>人在线<a class="glyphicon glyphicon-user" href="#userlist"></a></p>
             </div>
             <div class="body">
                 <div id="messages">
@@ -40,6 +43,11 @@
                 <div class="col-xs-12">
                     <input type="text" class="input-message input-text" placeholder="Type here..." ng-model="user.message" ng-keydown="user.send($event)">
                 </div>
+            </div>
+            <div class="popup">
+                <ul id="userlist" class="list-unstyled">
+                    <li ng-repeat="(username,coat) in room.userlist"><span ng-style="{color: coat}" ng-bind="username"></span></li>
+                </ul>
             </div>
         </div>
     </div>

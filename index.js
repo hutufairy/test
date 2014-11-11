@@ -77,14 +77,18 @@ if (cluster.isMaster) {
             }
         });
         socket.on('add user', function(username){
-            addedUser = true;
-            socket.username = username;
-            usernames[username] = username;
-            ++numUsers;
-            socket.emit('login', { numUsers: numUsers });
+            if(typeof usernames[username] !== 'undefined'){
+                socket.emit('login', { status: false, message: '呢称被占用' });
+            }else{
+                addedUser = true;
+                socket.username = username;
+                usernames[username] = username;
+                ++numUsers;
+                socket.emit('login', { status: true, numUsers: numUsers, userlist: usernames });
 
-            socket.broadcast.emit('user joined', { username: username, numUsers: numUsers });//广播给所有人（发送者除外）
-            console.log('user ' + socket.username +' enter');
+                socket.broadcast.emit('user joined', { username: username, numUsers: numUsers });//广播给所有人（发送者除外）
+                console.log('user ' + socket.username +' enter');
+            }
         });
 
     });
