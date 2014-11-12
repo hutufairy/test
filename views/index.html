@@ -13,7 +13,7 @@
                 <input class="input-username h2 input-text" type="text" maxlength="14" ng-model="user.name " ng-keydown="room.login($event)">
             </div>
             <div class="col-xs-12" ng-show="!!user.errormsg">
-                <p class="text-danger">{{user.errormsg}}</p>
+                <p class="text-danger" ng-bind="user.errormsg"></p>
             </div>
 
     </div>
@@ -26,14 +26,14 @@
             <div class="body">
                 <div id="messages">
                     <p ng-repeat="data in room.messages">
-                        <span ng-style='{color: data.coat}'>{{data.username}}</span>
-                        <span>{{data.message}}</span>
+                        <span ng-style='{color: data.coat}' ng-bind="data.username"></span>
+                        <span ng-bind="data.message"></span>
                     </p>
                 </div>
                 <div id="notices">
                     <p class="notice" ng-repeat="notice in room.notices"  style="opacity: 1">
                         <span ng-style="{color: notice.coat}" ng-bind='notice.username'></span>
-                        <span >{{notice.message}}</span>
+                        <span ng-bind="notice.message"></span>
                     </p>
                     <p class="notice" style="opacity: 1">欢迎来到吃货组织根据地</p>
                     <div class="cover"></div>
